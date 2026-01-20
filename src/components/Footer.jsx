@@ -1,133 +1,172 @@
 import { Link } from 'react-router-dom';
-import { MapPinIcon, PhoneIcon, EnvelopeIcon } from './Icons';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
+  const footerRef = useRef(null);
+  const titleRef = useRef(null);
   const currentYear = new Date().getFullYear();
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate the big title
+      gsap.fromTo(
+        titleRef.current,
+        { yPercent: 100, opacity: 0 },
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      // Animate footer columns
+      gsap.fromTo(
+        '.footer-col',
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Chi Siamo', href: '/chi-siamo' },
+    { name: 'Servizi', href: '/servizi' },
+    { name: 'Progetti', href: '/progetti' },
+    { name: 'Contatti', href: '/contatti' },
+  ];
+
   return (
-    <footer className="bg-primary-800 text-white">
-      {/* Main Footer */}
-      <div className="container-custom py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                <svg viewBox="0 0 40 40" className="w-7 h-7">
-                  <path d="M8 32 L8 16 L14 10 L20 16 L20 32 Z" fill="#d97706"/>
-                  <path d="M20 32 L20 16 L26 10 L32 16 L32 32 Z" fill="#f79f33"/>
-                  <rect x="12" y="22" width="4" height="5" fill="#1a4b7c"/>
-                  <rect x="24" y="22" width="4" height="5" fill="#1a4b7c"/>
-                </svg>
-              </div>
-              <div>
-                <span className="font-heading font-bold text-lg">C.E.M. S.r.l.</span>
-                <p className="text-xs text-primary-200">Impresa Edile</p>
-              </div>
+    <footer ref={footerRef} className="bg-[#0a0a0a] text-[#f5f2eb] relative overflow-hidden">
+      {/* Big decorative title */}
+      <div className="overflow-hidden py-16 md:py-24 border-b border-[#f5f2eb]/10">
+        <h2
+          ref={titleRef}
+          className="font-display text-[clamp(3rem,15vw,14rem)] leading-[0.85] text-center tracking-tighter opacity-20"
+        >
+          C.E.M.
+        </h2>
+      </div>
+
+      {/* Main content - Asymmetric grid */}
+      <div className="px-6 md:px-12 py-16 md:py-24">
+        <div className="grid grid-cols-12 gap-4 md:gap-8">
+          {/* Left side - Company info */}
+          <div className="col-span-12 md:col-span-5 lg:col-span-4 footer-col">
+            <div className="mb-8">
+              <span className="font-small text-[#E31C25] block mb-4">Impresa Edile</span>
+              <h3 className="font-heading text-[clamp(1.5rem,3vw,2.5rem)] mb-6">
+                Costruzioni solide,<br />
+                lavori che durano.
+              </h3>
             </div>
-            <p className="text-primary-200 text-sm leading-relaxed mb-4">
-              Costruzioni solide, lavori che durano nel tempo.
-              Da generazioni al servizio dell'Alta Valle Camonica.
-            </p>
-            <p className="text-primary-300 text-xs">
-              P.IVA / C.F.: 03519900983
-            </p>
+            <address className="not-italic font-body text-[#f5f2eb]/60 leading-relaxed">
+              <p className="font-semibold text-[#f5f2eb] mb-2">C.E.M. S.r.l.</p>
+              <p>Vicolo Pedrazzi, 15</p>
+              <p>25040 Corteno Golgi (BS)</p>
+              <p className="mt-4">P.IVA 03519900983</p>
+            </address>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-heading font-bold text-lg mb-4">Link Rapidi</h4>
-            <ul className="space-y-2">
-              {[
-                { name: 'Home', path: '/' },
-                { name: 'Chi Siamo', path: '/chi-siamo' },
-                { name: 'Servizi', path: '/servizi' },
-                { name: 'Progetti', path: '/progetti' },
-                { name: 'Contatti', path: '/contatti' },
-              ].map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-primary-200 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
+          {/* Spacer */}
+          <div className="hidden lg:block lg:col-span-2" />
+
+          {/* Navigation */}
+          <div className="col-span-6 md:col-span-3 lg:col-span-2 footer-col md:mt-12">
+            <span className="font-small text-[#f5f2eb]/40 block mb-6">Navigazione</span>
+            <nav className="flex flex-col gap-3">
+              {navigation.map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="font-body text-[#f5f2eb]/80 hover:text-[#E31C25] transition-colors duration-300 link-anim w-fit"
+                >
+                  {item.name}
+                </Link>
               ))}
-            </ul>
+            </nav>
           </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="font-heading font-bold text-lg mb-4">Servizi</h4>
-            <ul className="space-y-2 text-sm text-primary-200">
-              <li>Costruzioni Civili</li>
-              <li>Costruzioni Industriali</li>
-              <li>Ristrutturazioni</li>
-              <li>Manutenzioni</li>
-              <li>Opere in Muratura</li>
-              <li>Movimento Terra</li>
-            </ul>
-          </div>
+          {/* Contact */}
+          <div className="col-span-6 md:col-span-4 lg:col-span-3 footer-col md:mt-24">
+            <span className="font-small text-[#f5f2eb]/40 block mb-6">Contatti</span>
+            <div className="flex flex-col gap-4">
+              <a
+                href="tel:+390364000000"
+                className="font-body text-[#f5f2eb]/80 hover:text-[#E31C25] transition-colors duration-300 link-anim w-fit"
+              >
+                +39 0364 00 00 00
+              </a>
+              <a
+                href="mailto:info@cemsrl.it"
+                className="font-body text-[#f5f2eb]/80 hover:text-[#E31C25] transition-colors duration-300 link-anim w-fit"
+              >
+                info@cemsrl.it
+              </a>
+            </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-heading font-bold text-lg mb-4">Contatti</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start space-x-3">
-                <MapPinIcon className="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" />
-                <div className="text-sm text-primary-200">
-                  <p className="font-medium text-white">C.E.M. S.r.l.</p>
-                  <p>Vicolo Pedrazzi, 15</p>
-                  <p>25040 Corteno Golgi (BS)</p>
-                </div>
-              </li>
-              <li className="flex items-center space-x-3">
-                <PhoneIcon className="w-5 h-5 text-accent-400 flex-shrink-0" />
-                <a
-                  href="tel:+390364000000"
-                  className="text-sm text-primary-200 hover:text-white transition-colors"
-                >
-                  +39 0364 00 00 00
-                </a>
-              </li>
-              <li className="flex items-center space-x-3">
-                <EnvelopeIcon className="w-5 h-5 text-accent-400 flex-shrink-0" />
-                <a
-                  href="mailto:info@cemsrl.it"
-                  className="text-sm text-primary-200 hover:text-white transition-colors"
-                >
-                  info@cemsrl.it
-                </a>
-              </li>
-            </ul>
+            <div className="mt-12">
+              <span className="font-small text-[#f5f2eb]/40 block mb-4">Area operativa</span>
+              <p className="font-body text-[#f5f2eb]/60 text-sm">
+                Alta Valle Camonica<br />
+                Provincia di Brescia
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-primary-700">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-primary-300">
-              © {currentYear} C.E.M. S.r.l. - Tutti i diritti riservati
-            </p>
-            <div className="flex space-x-6 text-sm">
-              <Link
-                to="/privacy"
-                className="text-primary-300 hover:text-white transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                to="/cookie"
-                className="text-primary-300 hover:text-white transition-colors"
-              >
-                Cookie Policy
-              </Link>
-            </div>
+      {/* Bottom bar - Minimal */}
+      <div className="px-6 md:px-12 py-6 border-t border-[#f5f2eb]/10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <p className="font-small text-[#f5f2eb]/40">
+            {currentYear} C.E.M. S.r.l.
+          </p>
+          <div className="flex gap-8">
+            <Link
+              to="/privacy"
+              className="font-small text-[#f5f2eb]/40 hover:text-[#f5f2eb] transition-colors duration-300"
+            >
+              Privacy
+            </Link>
+            <Link
+              to="/cookie"
+              className="font-small text-[#f5f2eb]/40 hover:text-[#f5f2eb] transition-colors duration-300"
+            >
+              Cookie
+            </Link>
           </div>
         </div>
+      </div>
+
+      {/* Decorative corner element */}
+      <div className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 pointer-events-none">
+        <svg viewBox="0 0 100 100" className="w-full h-full opacity-5">
+          <path d="M100 0 L100 100 L0 100 Z" fill="#E31C25" />
+        </svg>
       </div>
     </footer>
   );

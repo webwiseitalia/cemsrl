@@ -1,168 +1,330 @@
 import { Link } from 'react-router-dom';
-import {
-  BuildingIcon,
-  HomeModernIcon,
-  WrenchIcon,
-  MapPinIcon,
-  CalendarDaysIcon,
-  ArrowRightIcon
-} from '../components/Icons';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import villaNeve from '../assets/foto/villa-pietra-neve-sera.webp';
+import cantierePietra from '../assets/foto/cantiere-costruzione-pietra.webp';
+import casaPietra from '../assets/foto/casa-pietra-legno-completata.webp';
+import ponteggio from '../assets/foto/ponteggio-ristrutturazione.webp';
+import interniLegno from '../assets/foto/interni-legno-xlam.webp';
+import fondazioni from '../assets/foto/fondazioni-cemento-armato.webp';
+import baitaEstate from '../assets/foto/baita-pietra-legno-estate.webp';
+import cantiereCem from '../assets/foto/cantiere-cem-cartello.webp';
+import ristrutturazione from '../assets/foto/ristrutturazione-ponteggi-montagna.webp';
+import cantiereGru from '../assets/foto/cantiere-fondazioni-gru.webp';
+import interniCamino from '../assets/foto/interni-camino-pietra.webp';
+import villaCem from '../assets/foto/villa-costruzione-neve-cem.webp';
+import cantiereLavori from '../assets/foto/cantiere-casa-pietra-lavori.webp';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ProgettiPage = () => {
+  const pageRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState('Tutti');
+
   const projects = [
     {
       id: 1,
-      title: 'Residenza Alpina',
-      category: 'Edilizia Residenziale',
-      location: 'Corteno Golgi (BS)',
-      year: '2023',
-      description: 'Costruzione di una villa bifamiliare con struttura in cemento armato e finiture di pregio. Progetto caratterizzato da elevata efficienza energetica.',
-      icon: HomeModernIcon,
-      features: ['350 mq', 'Classe A4', '2 unita']
+      title: 'Villa con Pannelli Solari',
+      category: 'Residenziale',
+      location: 'Corteno Golgi',
+      year: '2024',
+      image: villaCem,
     },
     {
       id: 2,
-      title: 'Capannone Industriale Valsaviore',
-      category: 'Edilizia Industriale',
-      location: 'Cevo (BS)',
+      title: 'Baita Alpina',
+      category: 'Nuova Costruzione',
+      location: 'Corteno Golgi',
       year: '2023',
-      description: 'Realizzazione di un capannone industriale per attivita artigianale. Struttura prefabbricata con copertura coibentata.',
-      icon: BuildingIcon,
-      features: ['800 mq', 'Prefabbricato', 'Impianto FV']
+      image: casaPietra,
     },
     {
       id: 3,
-      title: 'Ristrutturazione Casa Storica',
-      category: 'Ristrutturazione',
-      location: 'Edolo (BS)',
-      year: '2022',
-      description: 'Recupero completo di un edificio storico. Intervento di consolidamento strutturale e rifacimento copertura.',
-      icon: WrenchIcon,
-      features: ['220 mq', 'Restauro', 'Antisismico']
+      title: 'Villa Bifamiliare',
+      category: 'Residenziale',
+      location: 'Ponte di Legno',
+      year: '2023',
+      image: villaNeve,
     },
     {
       id: 4,
-      title: 'Condominio Monte Rosa',
-      category: 'Edilizia Residenziale',
-      location: 'Ponte di Legno (BS)',
-      year: '2022',
-      description: 'Costruzione di un complesso residenziale con 8 appartamenti. Struttura antisismica e riscaldamento a pavimento.',
-      icon: BuildingIcon,
-      features: ['1200 mq', '8 appartamenti', 'Classe A']
+      title: 'Ristrutturazione Condominio',
+      category: 'Ristrutturazione',
+      location: 'Aprica',
+      year: '2023',
+      image: ristrutturazione,
     },
     {
       id: 5,
-      title: 'Magazzino Agricolo',
-      category: 'Edilizia Rurale',
-      location: 'Vezza d Oglio (BS)',
-      year: '2021',
-      description: 'Realizzazione di un magazzino agricolo con struttura in legno lamellare e copertura coibentata.',
-      icon: HomeModernIcon,
-      features: ['450 mq', 'Legno lamellare', 'Eco-friendly']
+      title: 'Casa in Pietra',
+      category: 'Nuova Costruzione',
+      location: 'Edolo',
+      year: '2024',
+      image: cantierePietra,
     },
     {
       id: 6,
-      title: 'Rifacimento Facciate',
-      category: 'Manutenzione',
-      location: 'Temu (BS)',
-      year: '2021',
-      description: 'Riqualificazione delle facciate con cappotto termico e sostituzione serramenti.',
-      icon: WrenchIcon,
-      features: ['16 unita', 'Cappotto 12cm', 'Bonus 110%']
+      title: 'Interni in Legno Xlam',
+      category: 'Finiture',
+      location: 'Vezza d\'Oglio',
+      year: '2023',
+      image: interniLegno,
+    },
+    {
+      id: 7,
+      title: 'Fondazioni in C.A.',
+      category: 'Strutturale',
+      location: 'Corteno Golgi',
+      year: '2024',
+      image: fondazioni,
+    },
+    {
+      id: 8,
+      title: 'Baita Tradizionale',
+      category: 'Nuova Costruzione',
+      location: 'Monno',
+      year: '2022',
+      image: baitaEstate,
+    },
+    {
+      id: 9,
+      title: 'Struttura Prefabbricata',
+      category: 'Industriale',
+      location: 'Cevo',
+      year: '2024',
+      image: cantiereGru,
+    },
+    {
+      id: 10,
+      title: 'Camino in Pietra',
+      category: 'Finiture',
+      location: 'Corteno Golgi',
+      year: '2023',
+      image: interniCamino,
+    },
+    {
+      id: 11,
+      title: 'Casa - Fase Copertura',
+      category: 'Nuova Costruzione',
+      location: 'Santicolo',
+      year: '2024',
+      image: cantiereLavori,
+    },
+    {
+      id: 12,
+      title: 'Manutenzione Copertura',
+      category: 'Ristrutturazione',
+      location: 'Ponte di Legno',
+      year: '2023',
+      image: ponteggio,
     }
   ];
 
+  const categories = ['Tutti', 'Residenziale', 'Nuova Costruzione', 'Ristrutturazione', 'Finiture', 'Strutturale'];
+
+  const filteredProjects = activeFilter === 'Tutti'
+    ? projects
+    : projects.filter(p => p.category === activeFilter);
+
+  const stats = [
+    { num: '200+', label: 'Progetti' },
+    { num: '25+', label: 'Anni' },
+    { num: '50+', label: 'Clienti' },
+    { num: '100%', label: 'Consegnati' }
+  ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero animations
+      gsap.fromTo(
+        '.hero-title .word',
+        { yPercent: 100, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: 'power3.out', delay: 0.3 }
+      );
+
+      // Stats animation
+      gsap.fromTo(
+        '.stat-item',
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.stats-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    // Animate project cards when filter changes
+    gsap.fromTo(
+      '.project-card',
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power3.out' }
+    );
+  }, [activeFilter]);
+
   return (
-    <>
-      <section className="relative py-24 md:py-32 bg-gradient-to-br from-primary-800 to-primary-700">
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl">
-            <span className="text-accent-400 font-semibold text-sm uppercase tracking-wider">I Nostri Progetti</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mt-4 mb-6">
-              Lavori realizzati con passione
-            </h1>
-            <p className="text-xl text-white/80 leading-relaxed">
-              Una selezione dei nostri interventi in Alta Valle Camonica e provincia di Brescia.
-            </p>
-          </div>
+    <div ref={pageRef}>
+      {/* Hero Section */}
+      <section className="min-h-[70vh] bg-[#0a0a0a] text-[#f5f2eb] relative overflow-hidden flex items-end pb-20 md:pb-32">
+        <div className="absolute inset-0 opacity-30">
+          <img
+            src={cantiereCem}
+            alt="Cantiere C.E.M."
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
         </div>
-      </section>
 
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <div key={project.id} className="card card-hover group">
-                <div className="bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl p-8 mb-6 aspect-video flex items-center justify-center">
-                  <project.icon className="w-20 h-20 text-primary-400 group-hover:text-primary-500 transition-colors" />
-                </div>
-                <span className="text-xs font-semibold text-accent-500 bg-accent-50 px-3 py-1 rounded-full">
-                  {project.category}
+        <div className="relative z-10 w-full px-6 md:px-12">
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-12 md:col-span-10">
+              <span className="font-small text-[#E31C25] block mb-6">Portfolio</span>
+              <h1 className="hero-title overflow-hidden">
+                <span className="word inline-block font-display leading-[0.9]">
+                  I Nostri
                 </span>
-                <h3 className="font-heading font-bold text-xl text-primary-800 mt-3 mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-secondary-600 text-sm leading-relaxed mb-4">
-                  {project.description}
-                </p>
-                <div className="flex items-center gap-4 text-sm text-secondary-500 mb-4">
-                  <span className="flex items-center gap-1">
-                    <MapPinIcon className="w-4 h-4" />
-                    {project.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <CalendarDaysIcon className="w-4 h-4" />
-                    {project.year}
-                  </span>
+                <br />
+                <span className="word inline-block font-display leading-[0.9] ml-[10vw]">
+                  Progetti
+                </span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Filter & Projects */}
+      <section className="bg-[#f5f2eb] py-16 md:py-24">
+        <div className="px-6 md:px-12">
+          {/* Filter */}
+          <div className="flex flex-wrap gap-3 mb-16">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                className={`font-small px-5 py-2 border transition-all duration-300 ${
+                  activeFilter === cat
+                    ? 'bg-[#0a0a0a] text-[#f5f2eb] border-[#0a0a0a]'
+                    : 'bg-transparent text-[#0a0a0a] border-[#0a0a0a]/20 hover:border-[#E31C25] hover:text-[#E31C25]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Projects Grid - Masonry-like */}
+          <div className="grid grid-cols-12 gap-4 md:gap-6">
+            {filteredProjects.map((project, index) => {
+              // Create varied sizes for masonry effect
+              const sizes = [
+                'col-span-12 md:col-span-8',
+                'col-span-12 md:col-span-4',
+                'col-span-12 md:col-span-4',
+                'col-span-12 md:col-span-4',
+                'col-span-12 md:col-span-4',
+                'col-span-12 md:col-span-8',
+                'col-span-12 md:col-span-6',
+                'col-span-12 md:col-span-6',
+                'col-span-12 md:col-span-4',
+                'col-span-12 md:col-span-8',
+                'col-span-12 md:col-span-6',
+                'col-span-12 md:col-span-6',
+              ];
+              const sizeClass = sizes[index % sizes.length];
+              const isLarge = sizeClass.includes('col-span-8') || sizeClass.includes('col-span-6');
+
+              return (
+                <div
+                  key={project.id}
+                  className={`project-card ${sizeClass} group`}
+                >
+                  <div className={`relative overflow-hidden bg-[#0a0a0a] ${isLarge ? 'aspect-[16/10]' : 'aspect-square'}`}>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
+
+                    {/* Content overlay */}
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <span className="font-small text-[#E31C25] mb-2">{project.category}</span>
+                      <h3 className="font-subhead text-[#f5f2eb] mb-2">{project.title}</h3>
+                      <div className="flex items-center gap-4 text-[#f5f2eb]/60 font-small">
+                        <span>{project.location}</span>
+                        <span className="w-1 h-1 rounded-full bg-[#f5f2eb]/40" />
+                        <span>{project.year}</span>
+                      </div>
+                    </div>
+
+                    {/* Hover line */}
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-[#E31C25] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {project.features.map((feature, index) => (
-                    <span key={index} className="text-xs bg-gray-100 text-secondary-600 px-2 py-1 rounded">
-                      {feature}
-                    </span>
-                  ))}
-                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="stats-section bg-[#0a0a0a] text-[#f5f2eb] py-24 md:py-32">
+        <div className="px-6 md:px-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-item text-center md:text-left">
+                <span className="font-display text-[clamp(3rem,8vw,6rem)] text-[#E31C25]">
+                  {stat.num}
+                </span>
+                <span className="font-small text-[#f5f2eb]/50 block mt-2">{stat.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-padding bg-primary-800 text-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { number: '200+', label: 'Progetti Completati' },
-              { number: '25+', label: 'Anni di Esperienza' },
-              { number: '50+', label: 'Clienti Soddisfatti' },
-              { number: '100%', label: 'Lavori Consegnati' }
-            ].map((stat, index) => (
-              <div key={index}>
-                <p className="text-4xl md:text-5xl font-heading font-bold text-accent-400">{stat.number}</p>
-                <p className="text-white/70 mt-2">{stat.label}</p>
-              </div>
-            ))}
+      {/* CTA Section */}
+      <section className="bg-[#E31C25] text-[#f5f2eb] py-24 md:py-32">
+        <div className="px-6 md:px-12">
+          <div className="grid grid-cols-12 gap-4 items-center">
+            <div className="col-span-12 md:col-span-7">
+              <h2 className="font-heading mb-6">
+                Hai un progetto<br />
+                da realizzare?
+              </h2>
+              <p className="font-body text-[#f5f2eb]/80 max-w-md">
+                Contattaci per discutere delle tue esigenze e ricevere un preventivo personalizzato.
+              </p>
+            </div>
+            <div className="col-span-12 md:col-span-4 md:col-start-9 mt-8 md:mt-0">
+              <Link
+                to="/contatti"
+                className="btn-brutal bg-[#f5f2eb] text-[#0a0a0a] hover:bg-[#0a0a0a] hover:text-[#f5f2eb] inline-flex"
+              >
+                <span>Richiedi Preventivo</span>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
-      <section className="section-padding bg-gradient-to-r from-accent-600 to-accent-500">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-6">
-              Hai un progetto da realizzare?
-            </h2>
-            <p className="text-white/90 text-xl mb-8">
-              Contattaci per discutere delle tue esigenze e ricevere un preventivo personalizzato.
-            </p>
-            <Link to="/contatti" className="inline-flex items-center justify-center px-8 py-4 bg-white text-accent-600 font-semibold rounded-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl">
-              Richiedi preventivo gratuito
-              <ArrowRightIcon className="w-5 h-5 ml-2" />
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 };
 
