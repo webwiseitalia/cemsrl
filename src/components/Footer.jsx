@@ -12,40 +12,32 @@ const Footer = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate the big title
-      gsap.fromTo(
-        titleRef.current,
-        { yPercent: 100, opacity: 0 },
-        {
-          yPercent: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
+      // Animate the big title - use 'from' so elements are visible by default
+      gsap.from(titleRef.current, {
+        yPercent: 50,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: 'top 95%',
+          toggleActions: 'play none none none',
+        },
+      });
 
-      // Animate footer columns
-      gsap.fromTo(
-        '.footer-col',
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
+      // Animate footer columns - use 'from' so elements are visible by default
+      gsap.from('.footer-col', {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: 'top 95%',
+          toggleActions: 'play none none none',
+        },
+      });
     }, footerRef);
 
     return () => ctx.revert();
