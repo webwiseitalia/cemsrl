@@ -149,14 +149,14 @@ const HomePage = () => {
     <main className="overflow-hidden">
       {/* Hero Section - Broken Grid */}
       <section ref={heroRef} className="relative min-h-screen flex items-end pb-[var(--space-lg)] pt-40 md:pt-52">
-        {/* Background Image - Offset */}
-        <div className="absolute top-0 right-0 w-[85vw] h-[90vh] overflow-hidden">
+        {/* Background Image - Full Cover */}
+        <div className="absolute inset-0 overflow-hidden">
           <img
             src={heroImage}
             alt=""
-            className="hero-img w-full h-[120%] object-cover img-brutal"
+            className="hero-img w-full h-[120%] object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-cream)] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-cream)] via-[var(--color-cream)]/30 to-transparent" />
         </div>
 
         {/* Content - Asymmetric */}
