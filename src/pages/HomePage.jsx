@@ -153,7 +153,11 @@ const HomePage = () => {
         <div className="absolute inset-0 overflow-hidden">
           <img
             src={heroImage}
-            alt=""
+            alt="Villa in costruzione sulla neve - C.E.M. S.r.l. Corteno Golgi"
+            title="Cantiere C.E.M. - Villa in costruzione"
+            loading="eager"
+            width={1920}
+            height={1280}
             className="hero-img w-full h-[120%] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-cream)] via-[var(--color-cream)]/30 to-transparent" />
@@ -241,7 +245,11 @@ const HomePage = () => {
             <div className="about-img img-frame">
               <img
                 src={casaPietra}
-                alt="Casa in pietra Valle Camonica"
+                alt="Casa in pietra e legno completata in Valle Camonica"
+                title="Casa in pietra - Costruzione C.E.M."
+                loading="lazy"
+                width={800}
+                height={600}
                 className="w-full h-auto img-brutal"
               />
             </div>
@@ -290,6 +298,10 @@ const HomePage = () => {
                 <img
                   src={service.img}
                   alt={service.title}
+                  title={service.title}
+                  loading="lazy"
+                  width={600}
+                  height={450}
                   className="w-full h-full object-cover img-brutal hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -339,6 +351,10 @@ const HomePage = () => {
                 <img
                   src={project.img}
                   alt={project.title}
+                  title={`${project.title} - ${project.location}`}
+                  loading="lazy"
+                  width={600}
+                  height={750}
                   className="w-full h-full object-cover img-brutal group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -365,7 +381,11 @@ const HomePage = () => {
         <div className="absolute inset-0 opacity-10">
           <img
             src={cantiereCem}
-            alt=""
+            alt="Cantiere C.E.M. S.r.l."
+            title="Cantiere C.E.M."
+            loading="lazy"
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
           />
         </div>

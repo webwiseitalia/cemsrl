@@ -182,7 +182,11 @@ const ProgettiPage = () => {
         <div className="absolute inset-0 opacity-30">
           <img
             src={cantiereCem}
-            alt="Cantiere C.E.M."
+            alt="Cantiere C.E.M. S.r.l. - Portfolio progetti"
+            title="Portfolio Progetti C.E.M."
+            loading="eager"
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
@@ -255,7 +259,11 @@ const ProgettiPage = () => {
                   <div className={`relative overflow-hidden bg-[#0a0a0a] ${isLarge ? 'aspect-[16/10]' : 'aspect-square'}`}>
                     <img
                       src={project.image}
-                      alt={project.title}
+                      alt={`${project.title} - ${project.location}`}
+                      title={`${project.title} - ${project.category}`}
+                      loading="lazy"
+                      width={800}
+                      height={600}
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />

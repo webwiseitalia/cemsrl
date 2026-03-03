@@ -100,7 +100,11 @@ const ChiSiamoPage = () => {
         <div className="absolute inset-0 hero-image">
           <img
             src={cantiereCem}
-            alt="Cantiere C.E.M."
+            alt="Cantiere C.E.M. S.r.l. - Chi Siamo"
+            title="C.E.M. S.r.l. - La nostra storia"
+            loading="eager"
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent" />
@@ -156,7 +160,11 @@ const ChiSiamoPage = () => {
               <div className="aspect-[4/5] overflow-hidden">
                 <img
                   src={cantiereLavori}
-                  alt="Cantiere C.E.M. in costruzione"
+                  alt="Cantiere C.E.M. in costruzione - lavori in corso"
+                  title="Cantiere C.E.M. - Lavori in corso"
+                  loading="lazy"
+                  width={800}
+                  height={1000}
                   className="parallax-image w-full h-[120%] object-cover"
                 />
               </div>
@@ -240,7 +248,11 @@ const ChiSiamoPage = () => {
         <div className="absolute inset-0">
           <img
             src={borgoMontano}
-            alt="Borgo montano Valle Camonica"
+            alt="Borgo montano in Valle Camonica - area operativa C.E.M."
+            title="Valle Camonica - Area operativa"
+            loading="lazy"
+            width={1920}
+            height={1280}
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />

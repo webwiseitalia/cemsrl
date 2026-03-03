@@ -140,12 +140,14 @@ const Footer = () => {
           <div className="flex gap-8">
             <Link
               to="/privacy"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
               className="font-small text-[#f5f2eb]/40 hover:text-[#f5f2eb] transition-colors duration-300"
             >
               Privacy
             </Link>
             <Link
               to="/cookie"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
               className="font-small text-[#f5f2eb]/40 hover:text-[#f5f2eb] transition-colors duration-300"
             >
               Cookie
